@@ -1,0 +1,34 @@
+!---PROJECT 1: REDUNDANT BRANCH ---
+! DEVICE: Router 1 (Primary for Sales)
+
+hostname R1
+
+! [LAYER 3 - HSRP REDUNDANCY]
+interface GigabitEthernet0/0
+ ip address 10.0.1.2 255.255.255.248
+ duplex auto
+ speed auto
+ standby version 2
+ standby 1 priority 110
+ standby 1 preempt
+ standby 0 ip 10.0.1.1
+
+![STATIC ROUTES - GATEWAY LR - FLOATING]
+ip route 0.0.0.0 0.0.0.0 10.1.1.1 
+ip route 0.0.0.0 0.0.0.0 207.43.1.1 
+
+! [LAYER 3 - DYNAMIC ROUTING - OSPF]
+router ospf 1
+ log-adjacency-changes
+ auto-cost reference-bandwidth 1000000
+ network 10.0.1.0 0.0.0.3 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+ network 207.43.1.0 0.0.0.15 area 0
+ default-information originate
+
+! [NAT OVERLOAD]
+ip nat pool POOL1 207.43.1.3 207.43.1.13 netmask 255.255.255.240
+ip nat inside source list 1 pool POOL1 overload
+!
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255

@@ -1,0 +1,32 @@
+!---PROJECT 1: REDUNDANT BRANCH ---
+! DEVICE: Multilayer Switch 1 (Primary for Sales)
+
+hostname MPLS1
+
+! [LAYER 2 - ETHERCHANNEL]
+interface range GigabitEthernet1/0/3-4
+ channel-group 1 mode active
+ switchport mode trunk
+
+! [LAYER 3 - HSRP REDUNDANCY]
+interface Vlan10
+ ip address 192.168.10.254 255.255.255.0
+ standby 10 ip 192.168.10.1
+ standby 10 priority 110
+ standby 10 preempt
+interface Vlan20
+ ip address 192.168.20.2 255.255.255.0
+ standby 20 ip 192.168.20.1
+
+! [LAYER 3 - DYNAMIC ROUTING - OSPF]
+router ospf 1
+ log-adjacency-changes
+ auto-cost reference-bandwidth 1000000
+ network 192.168.10.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ network 10.0.0.0 0.0.0.3 area 0
+ default-information originate
+
+! [SPANNING TREE OPTIMIZATION]
+spanning-tree mode rapid-pvst
+spanning-tree vlan 10 priority 24576
