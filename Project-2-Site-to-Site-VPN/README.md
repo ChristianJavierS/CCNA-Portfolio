@@ -58,6 +58,6 @@ To validate the security and functionality of the tunnel, I conducted the follow
 ---
 
 ## Files in this Folder
-* `Branch-Office-Lab.pkt`: The original Packet Tracer file.
+* `site-to-site-vpn(gre over ipsec).pkt`: The original Packet Tracer file.
 * `Topology-Diagram.png`: High-resolution network diagram.
 * `Device-Configs/`: Folder containing sanitized startup configurations for all devices.
