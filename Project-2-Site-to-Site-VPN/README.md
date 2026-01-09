@@ -1,4 +1,4 @@
-###Project 2: Site to Site VPN
+### Project 2: Site to Site VPN
 Project Overview
 
 This project demonstrates the implementation of a secure, encrypted "tunnel" over an untrusted public network (ISP) to connect a Corporate Headquarter (HQ) to a remote Branch office. By combining GRE (Generic Routing Encapsulation) with IPsec (Internet Protocol Security), the design allows for both private data encryption and the transmission of dynamic routing protocol traffic.
