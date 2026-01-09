@@ -1,0 +1,42 @@
+! --- Basic Setup & License ---
+hostname HQ
+license boot module c2900 technology-package securityk9
+! (Remember reload after saving if this is the first time)
+
+! --- WAN & LAN Interfaces ---
+interface Serial0/3/0
+ ip address 207.43.1.2 255.255.255.248
+ no shutdown
+!
+interface GigabitEthernet0/0.10
+encapsulation dot1Q 10 native
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+
+! --- Phase 1: ISAKMP (Handshake) ---
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha
+ authentication pre-share
+ group 5
+crypto isakmp key YourSecretPassword address 207.43.1.2
+
+! --- Phase 2: IPsec (Data Encryption) ---
+crypto ipsec transform-set MYSET esp-aes 256 esp-sha-hmac
+!
+access-list 100 permit gre any any
+!
+crypto map MYMAP 10 ipsec-isakmp 
+ set peer 207.43.2.2
+ set transform-set MYSET
+ match address 100
+
+! --- Apply Crypto Map to WAN ---
+interface Serial0/3/0
+ crypto map MYMAP
+
+! --- GRE Tunnel Setup ---
+interface Tunnel0
+ ip address 10.0.0.1 255.255.255.252
+ tunnel source Serial0/3/0
+ tunnel destination 207.43.2.2
