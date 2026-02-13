@@ -36,5 +36,5 @@ This portfolio documents enterprise-grade networking projects involving routing,
 
 ## 📄 Contact & Links
 * **Email:** [chrisjsanavila@gmail.com](mailto:chrisjsanavila@gmail.com)
-* **LinkedIn:** [Christian Sanchez](https://www.linkedin.com/in/YOUR-LINKEDIN-URL](https://www.linkedin.com/in/christian-sanchez-33669920a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app))
+* **LinkedIn:** [Christian Sanchez](www.linkedin.com/in/christian-sanchez-33669920a))
 * **Website:** [AspireValet.com](http://aspirevalet.com)
